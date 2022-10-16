@@ -35,13 +35,13 @@ jobs:
       - name: Build
         # Using swift would be preferred, but using xcodebuild as it allows
         # the specification of variants, which the swift command does not
-        run: xcodebuild build -destination ${{ matrix.destination }}
+        run: xcodebuild build -scheme ViewInspectorPackageTests -destination ${{ matrix.destination }}
         # run: swift build -v
       - name: Run tests
         # Using swift would be preferred, but using xcodebuild as it allows
         # the specification of variants, which the swift command does not
         run: |
-          xcodebuild test -destination ${{ matrix.destination }} -enableCodeCoverage YES
+          xcodebuild test -scheme ViewInspectorPackageTests -destination ${{ matrix.destination }} -enableCodeCoverage YES
           xcrun llvm-cov export --format="lcov" --instr-profile=$( echo ~/Library/Developer/Xcode/DerivedData/ViewInspector-*/Build/ProfileData/*/Coverage.profdata ) --object=$( echo ~/Library/Developer/Xcode/DerivedData/ViewInspector-*/Build/Products/Debug*/ViewInspector.o ) > coverage.lcov
         # run: swift test -v
       - name: Upload coverage to Codecov
